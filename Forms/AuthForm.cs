@@ -24,7 +24,6 @@ namespace ZooShopDesktop.Forms
             string email = emailTextBox.Text.Trim();
             string password = passwordTextBox.Text;
 
-            // Валидация полей
             if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Будь ласка, введіть коректні данні", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);

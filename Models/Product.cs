@@ -16,7 +16,7 @@ namespace ZooShopDesktop.Models
         public int StockQuantity { get; set; }
         public string Weight { get; set; }
         public string AnimalAge { get; set; }
-        public string ShelfLifeMonths { get; set; }
+        public int ShelfLifeMonths { get; set; }
         public string Description { get; set; }
     }
 }
