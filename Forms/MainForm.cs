@@ -12,9 +12,24 @@ namespace ZooShopDesktop.Forms
 {
     public partial class MainForm : Form
     {
-        public MainForm()
+        private string userRole;
+        public MainForm(string userRole)
         {
+            userRole = userRole;
+
             InitializeComponent();
+        }
+
+        private void btnCatalog_Click(object sender, EventArgs e)
+        {
+            CatalogForm catalogForm = new CatalogForm();
+            catalogForm.Show();
+        }
+
+        private void btnManagers_Click(object sender, EventArgs e)
+        {
+            ManagersForm managersForm = new ManagersForm();
+            managersForm.Show();
         }
     }
 }

@@ -14,6 +14,8 @@ namespace ZooShopDesktop.Forms
 {
     public partial class AuthForm : Form
     {
+        private string role;
+
         public AuthForm()
         {
             InitializeComponent();
@@ -41,8 +43,10 @@ namespace ZooShopDesktop.Forms
                         int userId = reader.GetInt32("user_id");
                         string storedEmail = reader["email_"].ToString();
                         string storedPassword = reader["password_"].ToString();
-                        string role = reader["role_"].ToString();
+                        role = reader["role_"].ToString();
                         string fullName = reader["full_name"].ToString();
+
+
 
                         if (password == storedPassword)
                         {
@@ -74,8 +78,8 @@ namespace ZooShopDesktop.Forms
         {
             this.Hide();
 
-            CatalogForm catalogForm = new CatalogForm();
-            catalogForm.Show();
+            MainForm mainForm = new MainForm(role);
+            mainForm.Show();
         }
     }
 }

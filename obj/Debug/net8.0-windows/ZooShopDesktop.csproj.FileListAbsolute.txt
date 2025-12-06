@@ -70,3 +70,5 @@ C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\
 C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.sourcelink.json
 C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.ProductPageForm.resources
 C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.SetQuanityForm.resources
+C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.ManagersForm.resources
+C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.UpdateManagerForm.resources
