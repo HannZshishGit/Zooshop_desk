@@ -3,46 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
 
 namespace ZooShopDesktop.Models
 {
     public static class ShoppingCart
     {
-        private static List<Product> _items = new List<Product>();
-        private static Dictionary<int, int> _quantities = new Dictionary<int, int>();
+        private static List<Product> items = new List<Product>();
 
-        public static List<Product> Items => _items;
-        public static Dictionary<int, int> Quantities => _quantities;
+        public static IReadOnlyList<Product> Products => items;
 
         public static void AddItem(Product product, int quantity = 1)
         {
-            var existingItem = _items.FirstOrDefault(item => item.ProductId == product.ProductId);
+            if (product == null)
+            {
+                return;
+            }
 
-            if (existingItem != null)
-            {
-                _quantities[product.ProductId] += quantity;
-            }
-            else
-            {
-                _items.Add(product);
-                _quantities[product.ProductId] = quantity;
-            }
+            items.Add(product);
         }
 
-        public static int GetQuantity(int productId)
+        public static void ClearCart()
         {
-            return _quantities.ContainsKey(productId) ? _quantities[productId] : 0;
+            items.Clear();
         }
-
         public static decimal GetTotalPrice()
         {
-            return _items.Sum(item => item.Price * GetQuantity(item.ProductId));
+            return items.Sum(p => p.Price);
         }
 
-        public static int GetTotalItems()
+        public static int GetCount()
         {
-            return _quantities.Values.Sum();
+            return items.Count;
         }
     }
 }

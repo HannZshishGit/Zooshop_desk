@@ -4,6 +4,9 @@
     <Compile Update="Components\ProductCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Forms\AddClientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\AuthForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -20,9 +23,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\ProductPageForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Forms\SetQuantityForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\UpdateManagerForm.cs">

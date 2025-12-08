@@ -27,27 +27,26 @@ namespace ZooShopDesktop.Forms
             try
             {
                 string query = @"
-            SELECT 
-                p.product_id,
-                p.name as product_name,
-                p.price,
-                p.stock_quantity,
-                p.weight,
-                p.animal_age,
-                p.shelf_life_months,
-                p.description,
-                c.category_name,
-                m.manufacturer_name
-            FROM Products p
-            LEFT JOIN Categories c ON p.category_id = c.category_id
-            LEFT JOIN Manufacturers m ON p.manufacturer_id = m.manufacturer_id
-            WHERE p.product_id = " + _product.ProductId;
+                    select 
+                        p.product_id,
+                        p.name as product_name,
+                        p.price,
+                        p.stock_quantity,
+                        p.weight,
+                        p.animal_age,
+                        p.shelf_life_months,
+                        p.description,
+                        c.category_name,
+                        m.manufacturer_name
+                    from Products p
+                    left JOIN Categories c on p.category_id = c.category_id
+                    left JOIN Manufacturers m on p.manufacturer_id = m.manufacturer_id
+                    where p.product_id = " + _product.ProductId;
 
                 using (var reader = DbConfig.ReadData(query))
                 {
                     if (reader != null && reader.HasRows && reader.Read())
                     {
-                        // Обновляем объект _product актуальными данными из базы
                         _product.Name = reader["product_name"].ToString();
                         _product.Price = reader.GetDecimal("price");
                         _product.StockQuantity = reader.GetInt32("stock_quantity");
@@ -86,25 +85,13 @@ namespace ZooShopDesktop.Forms
         {
             if (_product.StockQuantity <= 0)
             {
-                MessageBox.Show("Товару немає в наявності", "Помилка",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Товару немає в наявності", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            using (SetQuanityForm quantityForm = new SetQuanityForm())
-            {
-                if (quantityForm.ShowDialog() == DialogResult.OK)
-                {
-                    int quantity = quantityForm.Quantity;
+            ShoppingCart.AddItem(_product);
 
-                    ShoppingCart.AddItem(_product, quantity);
-
-                    MessageBox.Show($"Товар \"{_product.Name}\" додано до кошика!\nКількість: {quantity} шт.",
-                        "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.Close();
-                }
-            }
+            MessageBox.Show($"Товар \"{_product.Name}\" додано до кошика!", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
