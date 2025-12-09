@@ -34,7 +34,7 @@ namespace ZooShopDesktop.Forms
 
             try
             {
-                string query = $"select user_id, email_, password_, role_, full_name from Users WHERE email_ = '{email}'";
+                string query = $"select user_id, email_, hashed_password, role_, full_name from Users WHERE email_ = '{email}'";
 
                 using (var reader = DbConfig.ReadData(query))
                 {
@@ -42,16 +42,15 @@ namespace ZooShopDesktop.Forms
                     {
                         int userId = reader.GetInt32("user_id");
                         string storedEmail = reader["email_"].ToString();
-                        string storedPassword = reader["password_"].ToString();
+                        string storedPassword = reader["hashed_password"].ToString();
                         role = reader["role_"].ToString();
                         string fullName = reader["full_name"].ToString();
 
+                        bool isPasswordsAreSame = BCrypt.Net.BCrypt.Verify(password, storedPassword);
 
-
-                        if (password == storedPassword)
+                        if (isPasswordsAreSame)
                         {
                             MessageBox.Show($"Вітаємо, {fullName}!\nВаша роль: {role}", "Успішний вхід", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                             OpenMainForm(role);
                         }
                         else

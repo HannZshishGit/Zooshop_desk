@@ -40,15 +40,15 @@
             // 
             // loginButton
             // 
-            loginButton.BackColor = Color.FromArgb(0, 120, 215);
+            loginButton.BackColor = Color.FromArgb(0, 122, 204);
             loginButton.Cursor = Cursors.Hand;
             loginButton.FlatAppearance.BorderSize = 0;
             loginButton.FlatStyle = FlatStyle.Flat;
-            loginButton.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            loginButton.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             loginButton.ForeColor = Color.White;
-            loginButton.Location = new Point(20, 175);
+            loginButton.Location = new Point(25, 175);
             loginButton.Name = "loginButton";
-            loginButton.Size = new Size(240, 35);
+            loginButton.Size = new Size(250, 38);
             loginButton.TabIndex = 5;
             loginButton.Text = "Увійти";
             loginButton.UseVisualStyleBackColor = false;
@@ -57,41 +57,39 @@
             // emailLabel
             // 
             emailLabel.AutoSize = true;
-            emailLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            emailLabel.Location = new Point(20, 60);
+            emailLabel.Font = new Font("Segoe UI", 9.5F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            emailLabel.Location = new Point(25, 60);
             emailLabel.Name = "emailLabel";
-            emailLabel.Size = new Size(39, 15);
+            emailLabel.Size = new Size(42, 17);
             emailLabel.TabIndex = 1;
             emailLabel.Text = "Email:";
-            emailLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // passwordLabel
             // 
             passwordLabel.AutoSize = true;
-            passwordLabel.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            passwordLabel.Location = new Point(20, 115);
+            passwordLabel.Font = new Font("Segoe UI", 9.5F);
+            passwordLabel.Location = new Point(25, 115);
             passwordLabel.Name = "passwordLabel";
-            passwordLabel.Size = new Size(52, 15);
+            passwordLabel.Size = new Size(58, 17);
             passwordLabel.TabIndex = 3;
             passwordLabel.Text = "Пароль:";
-            passwordLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // emailTextBox
             // 
             emailTextBox.BorderStyle = BorderStyle.FixedSingle;
-            emailTextBox.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            emailTextBox.Location = new Point(20, 80);
+            emailTextBox.Font = new Font("Segoe UI", 9.5F);
+            emailTextBox.Location = new Point(25, 80);
             emailTextBox.Name = "emailTextBox";
-            emailTextBox.Size = new Size(240, 23);
+            emailTextBox.Size = new Size(250, 24);
             emailTextBox.TabIndex = 2;
             // 
             // passwordTextBox
             // 
             passwordTextBox.BorderStyle = BorderStyle.FixedSingle;
-            passwordTextBox.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            passwordTextBox.Location = new Point(20, 135);
+            passwordTextBox.Font = new Font("Segoe UI", 9.5F);
+            passwordTextBox.Location = new Point(25, 135);
             passwordTextBox.Name = "passwordTextBox";
-            passwordTextBox.Size = new Size(240, 23);
+            passwordTextBox.Size = new Size(250, 24);
             passwordTextBox.TabIndex = 4;
             passwordTextBox.UseSystemPasswordChar = true;
             // 
@@ -105,26 +103,25 @@
             loginPanel.Controls.Add(passwordLabel);
             loginPanel.Controls.Add(passwordTextBox);
             loginPanel.Controls.Add(loginButton);
-            loginPanel.Location = new Point(226, 81);
+            loginPanel.Location = new Point(242, 105);
             loginPanel.Name = "loginPanel";
-            loginPanel.Padding = new Padding(20);
             loginPanel.Size = new Size(300, 250);
             loginPanel.TabIndex = 0;
             // 
             // titleLabel
             // 
             titleLabel.AutoSize = true;
-            titleLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            titleLabel.Location = new Point(20, 20);
+            titleLabel.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            titleLabel.ForeColor = Color.FromArgb(0, 122, 204);
+            titleLabel.Location = new Point(75, 20);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(108, 21);
+            titleLabel.Size = new Size(150, 25);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "Авторизація";
-            titleLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // AuthForm
             // 
-            BackColor = Color.FromArgb(240, 240, 240);
+            BackColor = Color.FromArgb(240, 248, 255);
             ClientSize = new Size(784, 461);
             Controls.Add(loginPanel);
             Name = "AuthForm";

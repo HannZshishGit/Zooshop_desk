@@ -15,6 +15,8 @@ namespace ZooShopDesktop.Forms
 {
     public partial class OrderForm : Form
     {
+        private int customerId = 0;
+
         public OrderForm()
         {
             InitializeComponent();
@@ -52,13 +54,14 @@ namespace ZooShopDesktop.Forms
                 return;
             }
 
+            if (customerId == 0 || string.IsNullOrEmpty(txtFullName.Text))
+            {
+                MessageBox.Show("Спочатку знайдіть або додайте клієнта", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (MessageBox.Show("Підтвердити оформлення замовлення?", "Підтвердження", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                if (string.IsNullOrEmpty(txtFullName.Text) || string.IsNullOrEmpty(txtEmail.Text))
-                {
-                    MessageBox.Show("Введіть дані клієнта для підтвердження замовлення");
-                }
-
                 SaveOrder();
                 DialogResult = DialogResult.OK;
                 this.Close();
@@ -67,37 +70,9 @@ namespace ZooShopDesktop.Forms
 
         private void SaveOrder()
         {
-            string email = txtEmail.Text;
-            string fullname = txtFullName.Text;
-
-            string query = $"select user_id from users where email_ = '{email}'";
-
-            int userId = 0;
-
             try
             {
-                using (var reader = DbConfig.ReadData(query))
-                {
-                    if (reader != null && reader.Read())
-                    {
-                        userId = reader.GetInt32("user_id");
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show($"Помилка при отриманні id клієнта: {exception}");
-            }
-
-            try
-            {
-                if (userId == 0)
-                {
-                    MessageBox.Show("Не вдалося знайти клієнта");
-                    return;
-                }
-
-                string orderQuery = $"insert into Orders (user_id, order_date, status, store_address) values ({userId}, '{DateTime.Now:yyyy-MM-dd}', 'нове', 'Магазин ZooShop'); select last_insert_id() as order_id;";
+                string orderQuery = $"insert into Orders (user_id, order_date, status, store_address) values ({customerId}, '{DateTime.Now:yyyy-MM-dd}', 'нове', 'Магазин ZooShop'); select last_insert_id() as order_id;";
 
                 int orderId = 0;
 
@@ -111,7 +86,7 @@ namespace ZooShopDesktop.Forms
 
                 if (orderId == 0)
                 {
-                    MessageBox.Show("Не вдалося знайти id замовлення");
+                    MessageBox.Show("Не вдалося створити замовлення");
                     return;
                 }
 
@@ -141,7 +116,108 @@ namespace ZooShopDesktop.Forms
         private void btnAddCustomer_Click(object sender, EventArgs e)
         {
             AddClientForm addClientForm = new AddClientForm();
-            addClientForm.Show();
+            if (addClientForm.ShowDialog() == DialogResult.OK)
+            {
+                if (!string.IsNullOrEmpty(txtEmail.Text))
+                {
+                    SearchCustomerByEmail(txtEmail.Text);
+                }
+            }
+        }
+
+        private void btnSearchCustomer_Click(object sender, EventArgs e)
+        {
+            string email = txtEmail.Text.Trim();
+
+            if (string.IsNullOrEmpty(email))
+            {
+                MessageBox.Show("Введіть email для пошуку клієнта", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            SearchCustomerByEmail(email);
+        }
+
+        private void SearchCustomerByEmail(string email)
+        {
+            try
+            {
+                string query = $"select user_id, full_name, phone, email_, role_ from users where email_ = '{email}'";
+
+                using (var reader = DbConfig.ReadData(query))
+                {
+                    if (reader != null && reader.Read())
+                    {
+                        customerId = reader.GetInt32("user_id");
+                        txtFullName.Text = reader.GetString("full_name");
+
+                        panelCustomerInfo.Visible = true;
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("phone")))
+                        {
+                            lblCustomerPhone.Text = reader.GetString("phone");
+                        }
+                        else
+                        {
+                            lblCustomerPhone.Text = "не вказано";
+                        }
+
+                        if (!reader.IsDBNull(reader.GetOrdinal("role_")))
+                        {
+                            string role = reader.GetString("role_");
+                            lblCustomerRole.Text = role;
+
+                            if (role != "Клієнт")
+                            {
+                                lblCustomerFound.ForeColor = Color.Orange;
+                                lblCustomerFound.Text = "Користувач знайдений (не клієнт)";
+                                btnConfirmOrder.Enabled = false;
+                            }
+                            else
+                            {
+                                lblCustomerFound.ForeColor = Color.Green;
+                                lblCustomerFound.Text = "Клієнт знайдений";
+                                btnConfirmOrder.Enabled = true;
+                            }
+                        }
+                        else
+                        {
+                            lblCustomerRole.Text = "не вказано";
+                            lblCustomerFound.ForeColor = Color.Green;
+                            lblCustomerFound.Text = "Клієнт знайдений";
+                            btnConfirmOrder.Enabled = true;
+                        }
+                    }
+                    else
+                    {
+                        customerId = 0;
+                        txtFullName.Clear();
+                        panelCustomerInfo.Visible = true;
+                        lblCustomerPhone.Text = "-";
+                        lblCustomerRole.Text = "-";
+                        lblCustomerFound.ForeColor = Color.Red;
+                        lblCustomerFound.Text = "Користувач не знайдений";
+                        btnConfirmOrder.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Помилка при пошуку клієнта: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtEmail_TextChanged(object sender, EventArgs e)
+        {
+            ClearCustomerInfo();
+        }
+
+        private void ClearCustomerInfo()
+        {
+            customerId = 0;
+            txtFullName.Clear();
+            panelCustomerInfo.Visible = false;
+            btnConfirmOrder.Enabled = false;
         }
     }
 }

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             dataGridViewOrder = new DataGridView();
             columnName = new DataGridViewTextBoxColumn();
             columnPrice = new DataGridViewTextBoxColumn();
@@ -45,10 +45,17 @@
             btnConfirmOrder = new Button();
             btnCancel = new Button();
             groupBoxCustomer = new GroupBox();
+            panelCustomerInfo = new Panel();
+            lblCustomerFound = new Label();
+            lblCustomerPhone = new Label();
+            lblCustomerRole = new Label();
+            lblPhoneLabel = new Label();
+            btnSearchCustomer = new Button();
             btnAddCustomer = new Button();
             groupBoxOrder = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrder).BeginInit();
             groupBoxCustomer.SuspendLayout();
+            panelCustomerInfo.SuspendLayout();
             groupBoxOrder.SuspendLayout();
             SuspendLayout();
             // 
@@ -79,9 +86,9 @@
             // columnPrice
             // 
             columnPrice.DataPropertyName = "Price";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            columnPrice.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            columnPrice.DefaultCellStyle = dataGridViewCellStyle1;
             columnPrice.HeaderText = "Ціна (грн)";
             columnPrice.Name = "columnPrice";
             columnPrice.ReadOnly = true;
@@ -89,9 +96,9 @@
             // columnWeight
             // 
             columnWeight.DataPropertyName = "Weight";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N2";
-            columnWeight.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            columnWeight.DefaultCellStyle = dataGridViewCellStyle2;
             columnWeight.HeaderText = "Вага (кг)";
             columnWeight.Name = "columnWeight";
             columnWeight.ReadOnly = true;
@@ -120,6 +127,7 @@
             txtFullName.Font = new Font("Segoe UI", 10F);
             txtFullName.Location = new Point(120, 60);
             txtFullName.Name = "txtFullName";
+            txtFullName.ReadOnly = true;
             txtFullName.Size = new Size(250, 25);
             txtFullName.TabIndex = 2;
             // 
@@ -130,7 +138,7 @@
             txtEmail.Location = new Point(120, 100);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(250, 25);
-            txtEmail.TabIndex = 4;
+            txtEmail.TabIndex = 1;
             // 
             // lblFullName
             // 
@@ -167,7 +175,7 @@
             // 
             lblItemsCount.AutoSize = true;
             lblItemsCount.Font = new Font("Segoe UI", 10F);
-            lblItemsCount.Location = new Point(15, 286);
+            lblItemsCount.Location = new Point(15, 295);
             lblItemsCount.Name = "lblItemsCount";
             lblItemsCount.Size = new Size(116, 19);
             lblItemsCount.TabIndex = 9;
@@ -176,6 +184,7 @@
             // btnConfirmOrder
             // 
             btnConfirmOrder.BackColor = Color.FromArgb(40, 167, 69);
+            btnConfirmOrder.Enabled = false;
             btnConfirmOrder.FlatAppearance.BorderSize = 0;
             btnConfirmOrder.FlatStyle = FlatStyle.Flat;
             btnConfirmOrder.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
@@ -205,6 +214,8 @@
             // 
             // groupBoxCustomer
             // 
+            groupBoxCustomer.Controls.Add(panelCustomerInfo);
+            groupBoxCustomer.Controls.Add(btnSearchCustomer);
             groupBoxCustomer.Controls.Add(btnAddCustomer);
             groupBoxCustomer.Controls.Add(lblCustomerInfo);
             groupBoxCustomer.Controls.Add(txtFullName);
@@ -213,10 +224,77 @@
             groupBoxCustomer.Controls.Add(txtEmail);
             groupBoxCustomer.Location = new Point(20, 20);
             groupBoxCustomer.Name = "groupBoxCustomer";
-            groupBoxCustomer.Size = new Size(400, 171);
+            groupBoxCustomer.Size = new Size(680, 171);
             groupBoxCustomer.TabIndex = 12;
             groupBoxCustomer.TabStop = false;
             groupBoxCustomer.Text = "Дані клієнта";
+            // 
+            // panelCustomerInfo
+            // 
+            panelCustomerInfo.BorderStyle = BorderStyle.FixedSingle;
+            panelCustomerInfo.Controls.Add(lblCustomerFound);
+            panelCustomerInfo.Controls.Add(lblCustomerPhone);
+            panelCustomerInfo.Controls.Add(lblCustomerRole);
+            panelCustomerInfo.Controls.Add(lblPhoneLabel);
+            panelCustomerInfo.Location = new Point(399, 24);
+            panelCustomerInfo.Name = "panelCustomerInfo";
+            panelCustomerInfo.Size = new Size(270, 61);
+            panelCustomerInfo.TabIndex = 10;
+            panelCustomerInfo.Visible = false;
+            // 
+            // lblCustomerFound
+            // 
+            lblCustomerFound.AutoSize = true;
+            lblCustomerFound.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblCustomerFound.ForeColor = Color.Green;
+            lblCustomerFound.Location = new Point(5, 9);
+            lblCustomerFound.Name = "lblCustomerFound";
+            lblCustomerFound.Size = new Size(110, 15);
+            lblCustomerFound.TabIndex = 0;
+            lblCustomerFound.Text = "Клієнт знайдений";
+            // 
+            // lblCustomerPhone
+            // 
+            lblCustomerPhone.AutoSize = true;
+            lblCustomerPhone.Font = new Font("Segoe UI", 9F);
+            lblCustomerPhone.Location = new Point(90, 35);
+            lblCustomerPhone.Name = "lblCustomerPhone";
+            lblCustomerPhone.Size = new Size(0, 15);
+            lblCustomerPhone.TabIndex = 4;
+            // 
+            // lblCustomerRole
+            // 
+            lblCustomerRole.AutoSize = true;
+            lblCustomerRole.Font = new Font("Segoe UI", 9F);
+            lblCustomerRole.Location = new Point(90, 60);
+            lblCustomerRole.Name = "lblCustomerRole";
+            lblCustomerRole.Size = new Size(0, 15);
+            lblCustomerRole.TabIndex = 3;
+            // 
+            // lblPhoneLabel
+            // 
+            lblPhoneLabel.AutoSize = true;
+            lblPhoneLabel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPhoneLabel.Location = new Point(5, 35);
+            lblPhoneLabel.Name = "lblPhoneLabel";
+            lblPhoneLabel.Size = new Size(60, 15);
+            lblPhoneLabel.TabIndex = 1;
+            lblPhoneLabel.Text = "Телефон:";
+            // 
+            // btnSearchCustomer
+            // 
+            btnSearchCustomer.BackColor = Color.FromArgb(255, 193, 7);
+            btnSearchCustomer.FlatAppearance.BorderSize = 0;
+            btnSearchCustomer.FlatStyle = FlatStyle.Flat;
+            btnSearchCustomer.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnSearchCustomer.ForeColor = Color.Black;
+            btnSearchCustomer.Location = new Point(220, 22);
+            btnSearchCustomer.Name = "btnSearchCustomer";
+            btnSearchCustomer.Size = new Size(150, 25);
+            btnSearchCustomer.TabIndex = 2;
+            btnSearchCustomer.Text = "Пошук";
+            btnSearchCustomer.UseVisualStyleBackColor = false;
+            btnSearchCustomer.Click += btnSearchCustomer_Click;
             // 
             // btnAddCustomer
             // 
@@ -225,10 +303,10 @@
             btnAddCustomer.FlatStyle = FlatStyle.Flat;
             btnAddCustomer.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnAddCustomer.ForeColor = Color.White;
-            btnAddCustomer.Location = new Point(20, 130);
+            btnAddCustomer.Location = new Point(15, 131);
             btnAddCustomer.Name = "btnAddCustomer";
-            btnAddCustomer.Size = new Size(350, 30);
-            btnAddCustomer.TabIndex = 8;
+            btnAddCustomer.Size = new Size(200, 30);
+            btnAddCustomer.TabIndex = 3;
             btnAddCustomer.Text = "Додати клієнта";
             btnAddCustomer.UseVisualStyleBackColor = false;
             btnAddCustomer.Click += btnAddCustomer_Click;
@@ -242,7 +320,7 @@
             groupBoxOrder.Controls.Add(btnConfirmOrder);
             groupBoxOrder.Location = new Point(20, 197);
             groupBoxOrder.Name = "groupBoxOrder";
-            groupBoxOrder.Size = new Size(680, 311);
+            groupBoxOrder.Size = new Size(680, 317);
             groupBoxOrder.TabIndex = 13;
             groupBoxOrder.TabStop = false;
             groupBoxOrder.Text = "Замовлення";
@@ -252,7 +330,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(720, 520);
+            ClientSize = new Size(720, 526);
             Controls.Add(groupBoxOrder);
             Controls.Add(groupBoxCustomer);
             FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -264,6 +342,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrder).EndInit();
             groupBoxCustomer.ResumeLayout(false);
             groupBoxCustomer.PerformLayout();
+            panelCustomerInfo.ResumeLayout(false);
+            panelCustomerInfo.PerformLayout();
             groupBoxOrder.ResumeLayout(false);
             groupBoxOrder.PerformLayout();
             ResumeLayout(false);
@@ -288,5 +368,11 @@
         private GroupBox groupBoxCustomer;
         private GroupBox groupBoxOrder;
         private Button btnAddCustomer;
+        private Panel panelCustomerInfo;
+        private Label lblCustomerFound;
+        private Label lblCustomerPhone;
+        private Label lblCustomerRole;
+        private Label lblPhoneLabel;
+        private Button btnSearchCustomer;
     }
 }

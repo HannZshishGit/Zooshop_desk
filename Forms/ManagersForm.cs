@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Crypto.Generators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
 
 namespace ZooShopDesktop.Forms
 {
@@ -42,13 +43,14 @@ namespace ZooShopDesktop.Forms
             }
         }
 
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            string fullName = textBoxFullName.Text.Trim();
-            string phone = textBoxPhone.Text.Trim();
-            string email = textBoxEmail.Text.Trim();
-            string password = textBoxPassword.Text.Trim();
+            string fullName = textBoxFullName.Text;
+            string phone = textBoxPhone.Text;
+            string email = textBoxEmail.Text;
+            string password = textBoxPassword.Text;
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
             if (string.IsNullOrWhiteSpace(fullName) || string.IsNullOrWhiteSpace(phone) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
             {
@@ -56,7 +58,7 @@ namespace ZooShopDesktop.Forms
                 return;
             }
 
-            string query = $"insert into Users (full_name, phone, email_, password_, role_) values ('{fullName}', '{phone}', '{email}', '{password}', 'Менеджер');";
+            string query = $"insert into Users (full_name, phone, email_, hashed_password, role_) values ('{fullName}', '{phone}', '{email}', '{hashedPassword}', 'Менеджер');";
 
             try
             {
@@ -105,6 +107,10 @@ namespace ZooShopDesktop.Forms
             int userId = Convert.ToInt32(row.Cells["Id"].Value);
 
             UpdateManagerForm updateManagerForm = new UpdateManagerForm(userId);
+
+            updateManagerForm.StartPosition = FormStartPosition.Manual;
+            updateManagerForm.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 - updateManagerForm.Width / 2, Screen.PrimaryScreen.Bounds.Height / 2 - updateManagerForm.Height / 2);
+
             updateManagerForm.Show();
         }
 
@@ -114,6 +120,11 @@ namespace ZooShopDesktop.Forms
             textBoxPhone.Clear();
             textBoxEmail.Clear();
             textBoxPassword.Clear();
+        }
+
+        private void refreshBtn_Click(object sender, EventArgs e)
+        {
+            LoadManagers();
         }
     }
 }

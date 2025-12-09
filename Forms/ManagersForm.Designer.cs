@@ -49,6 +49,7 @@
             btnClear = new Button();
             btnDelete = new Button();
             btnUpdate = new Button();
+            btnRefresh = new Button();
             btnAdd = new Button();
             panelData = new Panel();
             dataGridViewManagers = new DataGridView();
@@ -56,6 +57,7 @@
             Email = new DataGridViewTextBoxColumn();
             Phone = new DataGridViewTextBoxColumn();
             Id = new DataGridViewTextBoxColumn();
+
             panelHeader.SuspendLayout();
             panelMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer).BeginInit();
@@ -75,9 +77,8 @@
             panelHeader.Controls.Add(labelTitle);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
-            panelHeader.Margin = new Padding(3, 4, 3, 4);
             panelHeader.Name = "panelHeader";
-            panelHeader.Size = new Size(1143, 80);
+            panelHeader.Size = new Size(1000, 60);
             panelHeader.TabIndex = 0;
             // 
             // labelTitle
@@ -85,9 +86,9 @@
             labelTitle.AutoSize = true;
             labelTitle.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             labelTitle.ForeColor = Color.White;
-            labelTitle.Location = new Point(23, 12);
+            labelTitle.Location = new Point(20, 9);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(371, 37);
+            labelTitle.Size = new Size(298, 30);
             labelTitle.TabIndex = 1;
             labelTitle.Text = "Управління менеджерами";
             // 
@@ -95,18 +96,16 @@
             // 
             panelMain.Controls.Add(splitContainer);
             panelMain.Dock = DockStyle.Fill;
-            panelMain.Location = new Point(0, 80);
-            panelMain.Margin = new Padding(3, 4, 3, 4);
+            panelMain.Location = new Point(0, 60);
             panelMain.Name = "panelMain";
-            panelMain.Padding = new Padding(23, 27, 23, 27);
-            panelMain.Size = new Size(1143, 720);
+            panelMain.Padding = new Padding(20);
+            panelMain.Size = new Size(1000, 540);
             panelMain.TabIndex = 1;
             // 
             // splitContainer
             // 
             splitContainer.Dock = DockStyle.Fill;
-            splitContainer.Location = new Point(23, 27);
-            splitContainer.Margin = new Padding(3, 4, 3, 4);
+            splitContainer.Location = new Point(20, 20);
             splitContainer.Name = "splitContainer";
             // 
             // splitContainer.Panel1
@@ -117,9 +116,8 @@
             // splitContainer.Panel2
             // 
             splitContainer.Panel2.Controls.Add(panelData);
-            splitContainer.Size = new Size(1097, 666);
-            splitContainer.SplitterDistance = 365;
-            splitContainer.SplitterWidth = 5;
+            splitContainer.Size = new Size(960, 500);
+            splitContainer.SplitterDistance = 320;
             splitContainer.TabIndex = 0;
             // 
             // panelForm
@@ -128,9 +126,8 @@
             panelForm.Controls.Add(panelButtons);
             panelForm.Dock = DockStyle.Fill;
             panelForm.Location = new Point(0, 0);
-            panelForm.Margin = new Padding(3, 4, 3, 4);
             panelForm.Name = "panelForm";
-            panelForm.Size = new Size(365, 666);
+            panelForm.Size = new Size(320, 500);
             panelForm.TabIndex = 0;
             // 
             // groupBoxUserInfo
@@ -146,94 +143,88 @@
             groupBoxUserInfo.Dock = DockStyle.Fill;
             groupBoxUserInfo.Font = new Font("Segoe UI", 10F);
             groupBoxUserInfo.Location = new Point(0, 0);
-            groupBoxUserInfo.Margin = new Padding(3, 4, 3, 4);
             groupBoxUserInfo.Name = "groupBoxUserInfo";
-            groupBoxUserInfo.Padding = new Padding(3, 4, 3, 4);
-            groupBoxUserInfo.Size = new Size(365, 506);
+            groupBoxUserInfo.Size = new Size(320, 334);
             groupBoxUserInfo.TabIndex = 0;
             groupBoxUserInfo.TabStop = false;
             groupBoxUserInfo.Text = "Додати нового менеджера";
             // 
             // textBoxPassword
             // 
-            textBoxPassword.Location = new Point(23, 404);
-            textBoxPassword.Margin = new Padding(3, 4, 3, 4);
+            textBoxPassword.Location = new Point(20, 303);
             textBoxPassword.Name = "textBoxPassword";
             textBoxPassword.PasswordChar = '*';
-            textBoxPassword.Size = new Size(319, 30);
+            textBoxPassword.Size = new Size(280, 25);
             textBoxPassword.TabIndex = 8;
             // 
             // labelPassword
             // 
             labelPassword.AutoSize = true;
-            labelPassword.Location = new Point(23, 377);
+            labelPassword.Location = new Point(20, 283);
             labelPassword.Name = "labelPassword";
-            labelPassword.Size = new Size(73, 23);
+            labelPassword.Size = new Size(59, 19);
             labelPassword.TabIndex = 7;
             labelPassword.Text = "Пароль:";
             // 
             // textBoxEmail
             // 
-            textBoxEmail.Location = new Point(23, 324);
-            textBoxEmail.Margin = new Padding(3, 4, 3, 4);
+            textBoxEmail.Location = new Point(20, 243);
             textBoxEmail.Name = "textBoxEmail";
-            textBoxEmail.Size = new Size(319, 30);
+            textBoxEmail.Size = new Size(280, 25);
             textBoxEmail.TabIndex = 6;
             // 
             // labelEmail
             // 
             labelEmail.AutoSize = true;
-            labelEmail.Location = new Point(23, 297);
+            labelEmail.Location = new Point(20, 223);
             labelEmail.Name = "labelEmail";
-            labelEmail.Size = new Size(55, 23);
+            labelEmail.Size = new Size(44, 19);
             labelEmail.TabIndex = 5;
             labelEmail.Text = "Email:";
             // 
             // textBoxPhone
             // 
-            textBoxPhone.Location = new Point(23, 244);
-            textBoxPhone.Margin = new Padding(3, 4, 3, 4);
+            textBoxPhone.Location = new Point(20, 183);
             textBoxPhone.Name = "textBoxPhone";
-            textBoxPhone.Size = new Size(319, 30);
+            textBoxPhone.Size = new Size(280, 25);
             textBoxPhone.TabIndex = 4;
             // 
             // labelPhone
             // 
             labelPhone.AutoSize = true;
-            labelPhone.Location = new Point(23, 217);
+            labelPhone.Location = new Point(20, 163);
             labelPhone.Name = "labelPhone";
-            labelPhone.Size = new Size(146, 23);
+            labelPhone.Size = new Size(119, 19);
             labelPhone.TabIndex = 3;
             labelPhone.Text = "Номер телефону:";
             // 
             // textBoxFullName
             // 
-            textBoxFullName.Location = new Point(23, 164);
-            textBoxFullName.Margin = new Padding(3, 4, 3, 4);
+            textBoxFullName.Location = new Point(20, 123);
             textBoxFullName.Name = "textBoxFullName";
-            textBoxFullName.Size = new Size(319, 30);
+            textBoxFullName.Size = new Size(280, 25);
             textBoxFullName.TabIndex = 1;
             // 
             // labelFullName
             // 
             labelFullName.AutoSize = true;
-            labelFullName.Location = new Point(23, 137);
+            labelFullName.Location = new Point(20, 103);
             labelFullName.Name = "labelFullName";
-            labelFullName.Size = new Size(140, 23);
+            labelFullName.Size = new Size(113, 19);
             labelFullName.TabIndex = 0;
             labelFullName.Text = "Повне ім'я (ПІБ):";
             // 
             // panelButtons
             // 
+            panelButtons.Controls.Add(btnRefresh);
             panelButtons.Controls.Add(btnClear);
             panelButtons.Controls.Add(btnDelete);
             panelButtons.Controls.Add(btnUpdate);
             panelButtons.Controls.Add(btnAdd);
             panelButtons.Dock = DockStyle.Bottom;
-            panelButtons.Location = new Point(0, 506);
-            panelButtons.Margin = new Padding(3, 4, 3, 4);
+            panelButtons.Location = new Point(0, 334);
             panelButtons.Name = "panelButtons";
-            panelButtons.Size = new Size(365, 160);
+            panelButtons.Size = new Size(320, 166);
             panelButtons.TabIndex = 1;
             // 
             // btnClear
@@ -243,10 +234,9 @@
             btnClear.FlatStyle = FlatStyle.Flat;
             btnClear.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnClear.ForeColor = Color.White;
-            btnClear.Location = new Point(194, 93);
-            btnClear.Margin = new Padding(3, 4, 3, 4);
+            btnClear.Location = new Point(170, 70);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(149, 53);
+            btnClear.Size = new Size(130, 40);
             btnClear.TabIndex = 3;
             btnClear.Text = "Очистити";
             btnClear.UseVisualStyleBackColor = false;
@@ -259,10 +249,9 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(23, 93);
-            btnDelete.Margin = new Padding(3, 4, 3, 4);
+            btnDelete.Location = new Point(20, 70);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(149, 53);
+            btnDelete.Size = new Size(130, 40);
             btnDelete.TabIndex = 2;
             btnDelete.Text = "Видалити";
             btnDelete.UseVisualStyleBackColor = false;
@@ -275,10 +264,9 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnUpdate.ForeColor = Color.White;
-            btnUpdate.Location = new Point(194, 27);
-            btnUpdate.Margin = new Padding(3, 4, 3, 4);
+            btnUpdate.Location = new Point(170, 20);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(149, 53);
+            btnUpdate.Size = new Size(130, 40);
             btnUpdate.TabIndex = 1;
             btnUpdate.Text = "Оновити";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -291,23 +279,36 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btnAdd.ForeColor = Color.White;
-            btnAdd.Location = new Point(23, 27);
-            btnAdd.Margin = new Padding(3, 4, 3, 4);
+            btnAdd.Location = new Point(20, 20);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(149, 53);
+            btnAdd.Size = new Size(130, 40);
             btnAdd.TabIndex = 0;
             btnAdd.Text = "Додати";
             btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
+            // 
+            // btnRefresh
+            //
+            btnRefresh.BackColor = Color.FromArgb(0, 150, 136);
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            btnRefresh.ForeColor = Color.White;
+            btnRefresh.Location = new Point(20, 116);
+            btnRefresh.Name = "refreshBtn";
+            btnRefresh.Size = new Size(130, 40);
+            btnRefresh.TabIndex = 4;
+            btnRefresh.Text = "Оновити список";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += refreshBtn_Click;
             // 
             // panelData
             // 
             panelData.Controls.Add(dataGridViewManagers);
             panelData.Dock = DockStyle.Fill;
             panelData.Location = new Point(0, 0);
-            panelData.Margin = new Padding(3, 4, 3, 4);
             panelData.Name = "panelData";
-            panelData.Size = new Size(727, 666);
+            panelData.Size = new Size(636, 500);
             panelData.TabIndex = 0;
             // 
             // dataGridViewManagers
@@ -335,7 +336,6 @@
             dataGridViewManagers.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewManagers.Dock = DockStyle.Fill;
             dataGridViewManagers.Location = new Point(0, 0);
-            dataGridViewManagers.Margin = new Padding(3, 4, 3, 4);
             dataGridViewManagers.MultiSelect = false;
             dataGridViewManagers.Name = "dataGridViewManagers";
             dataGridViewManagers.ReadOnly = true;
@@ -348,9 +348,8 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dataGridViewManagers.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             dataGridViewManagers.RowHeadersVisible = false;
-            dataGridViewManagers.RowHeadersWidth = 51;
             dataGridViewManagers.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewManagers.Size = new Size(727, 666);
+            dataGridViewManagers.Size = new Size(636, 500);
             dataGridViewManagers.TabIndex = 1;
             // 
             // Fullname
@@ -358,7 +357,6 @@
             Fullname.DataPropertyName = "full_name";
             Fullname.FillWeight = 200F;
             Fullname.HeaderText = "ПІБ";
-            Fullname.MinimumWidth = 6;
             Fullname.Name = "Fullname";
             Fullname.ReadOnly = true;
             // 
@@ -367,7 +365,6 @@
             Email.DataPropertyName = "email_";
             Email.FillWeight = 250F;
             Email.HeaderText = "Email";
-            Email.MinimumWidth = 6;
             Email.Name = "Email";
             Email.ReadOnly = true;
             // 
@@ -376,7 +373,6 @@
             Phone.DataPropertyName = "phone";
             Phone.FillWeight = 150F;
             Phone.HeaderText = "Телефон";
-            Phone.MinimumWidth = 6;
             Phone.Name = "Phone";
             Phone.ReadOnly = true;
             // 
@@ -384,21 +380,19 @@
             // 
             Id.DataPropertyName = "user_id";
             Id.HeaderText = "Id";
-            Id.MinimumWidth = 6;
             Id.Name = "Id";
             Id.ReadOnly = true;
             Id.Visible = false;
             // 
             // ManagersForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1143, 800);
+            ClientSize = new Size(1000, 600);
             Controls.Add(panelMain);
             Controls.Add(panelHeader);
             Font = new Font("Segoe UI", 9F);
-            Margin = new Padding(3, 4, 3, 4);
-            MinimumSize = new Size(912, 784);
+            MinimumSize = new Size(800, 600);
             Name = "ManagersForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Управління менеджерами";
@@ -440,6 +434,7 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Panel panelData;
+        private Button btnRefresh;
         private System.Windows.Forms.DataGridView dataGridViewManagers;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fullname;
         private System.Windows.Forms.DataGridViewTextBoxColumn Phone;
