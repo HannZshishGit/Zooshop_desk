@@ -57,16 +57,16 @@
             priceLabel.ForeColor = Color.FromArgb(0, 120, 215);
             priceLabel.Location = new Point(10, 55);
             priceLabel.Name = "priceLabel";
-            priceLabel.Size = new Size(100, 20);
+            priceLabel.Size = new Size(100, 31);
             priceLabel.TabIndex = 1;
             priceLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // stockLabel
             // 
             stockLabel.Font = new Font("Segoe UI", 8F);
-            stockLabel.Location = new Point(10, 80);
+            stockLabel.Location = new Point(10, 90);
             stockLabel.Name = "stockLabel";
-            stockLabel.Size = new Size(220, 15);
+            stockLabel.Size = new Size(220, 35);
             stockLabel.TabIndex = 2;
             stockLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -82,9 +82,9 @@
             // ageLabel
             // 
             ageLabel.Font = new Font("Segoe UI", 8F);
-            ageLabel.Location = new Point(10, 120);
+            ageLabel.Location = new Point(10, 130);
             ageLabel.Name = "ageLabel";
-            ageLabel.Size = new Size(220, 15);
+            ageLabel.Size = new Size(220, 35);
             ageLabel.TabIndex = 4;
             ageLabel.TextAlign = ContentAlignment.MiddleLeft;
             // 
@@ -110,7 +110,7 @@
             Margin = new Padding(10);
             Name = "ProductCard";
             Padding = new Padding(10);
-            Size = new Size(248, 168);
+            Size = new Size(259, 194);
             ResumeLayout(false);
         }
 

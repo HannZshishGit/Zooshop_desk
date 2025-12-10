@@ -72,7 +72,9 @@ namespace ZooShopDesktop.Forms
         {
             try
             {
-                string orderQuery = $"insert into Orders (user_id, order_date, status, store_address) values ({customerId}, '{DateTime.Now:yyyy-MM-dd}', 'нове', 'Магазин ZooShop'); select last_insert_id() as order_id;";
+                string recipient = txtRecipient.Text;
+
+                string orderQuery = $"insert into Orders (user_id, order_date, status, store_address, recipient) values ({customerId}, '{DateTime.Now:yyyy-MM-dd}', 'нове', 'Магазин ZooShop', '{recipient}'); select last_insert_id() as order_id;";
 
                 int orderId = 0;
 

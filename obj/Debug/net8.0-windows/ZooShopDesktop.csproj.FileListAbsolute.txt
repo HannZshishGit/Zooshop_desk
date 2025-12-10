@@ -73,3 +73,4 @@ C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\
 C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.UpdateManagerForm.resources
 C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.AddClientForm.resources
 C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\bin\Debug\net8.0-windows\BCrypt.Net-Next.dll
+C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\obj\Debug\net8.0-windows\ZooShopDesktop.Forms.OrdersForm.resources

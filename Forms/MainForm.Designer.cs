@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             panelHeader = new Panel();
             labelTitle = new Label();
             panelMain = new Panel();
@@ -58,7 +59,7 @@
             labelTitle.ForeColor = Color.White;
             labelTitle.Location = new Point(50, 30);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(213, 45);
+            labelTitle.Size = new Size(251, 54);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "Зоомагазин";
             // 
@@ -99,9 +100,8 @@
             btnCatalog.FlatStyle = FlatStyle.Flat;
             btnCatalog.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnCatalog.ForeColor = Color.White;
-            btnCatalog.Image = Image.FromFile(@"C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\Images\cart.png");
-            btnCatalog.ImageAlign = ContentAlignment.TopCenter;
-            btnCatalog.Location = new Point(440, 30);
+            btnCatalog.Image = (Image)resources.GetObject("btnCatalog.Image");
+            btnCatalog.Location = new Point(430, 30);
             btnCatalog.Name = "btnCatalog";
             btnCatalog.Padding = new Padding(0, 20, 0, 10);
             btnCatalog.Size = new Size(320, 140);
@@ -122,9 +122,9 @@
             btnManagers.FlatStyle = FlatStyle.Flat;
             btnManagers.Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             btnManagers.ForeColor = Color.White;
-            btnManagers.Image = Image.FromFile(@"C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\Images\manager.png");
+            btnManagers.Image = (Image)resources.GetObject("btnManagers.Image");
             btnManagers.ImageAlign = ContentAlignment.TopCenter;
-            btnManagers.Location = new Point(40, 30);
+            btnManagers.Location = new Point(50, 30);
             btnManagers.Name = "btnManagers";
             btnManagers.Padding = new Padding(0, 20, 0, 10);
             btnManagers.Size = new Size(320, 140);
@@ -138,7 +138,7 @@
             // backgroundPictureBox
             // 
             backgroundPictureBox.Dock = DockStyle.Fill;
-            backgroundPictureBox.Image = Image.FromFile(@"C:\Users\Artur\Downloads\ZooShopDesktop\ZooShopDesktop\Images\bg1.png");
+            backgroundPictureBox.Image = (Image)resources.GetObject("backgroundPictureBox.Image");
             backgroundPictureBox.Location = new Point(0, 0);
             backgroundPictureBox.Name = "backgroundPictureBox";
             backgroundPictureBox.Size = new Size(1200, 700);
@@ -148,7 +148,7 @@
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1200, 800);
             Controls.Add(panelMain);
@@ -157,7 +157,7 @@
             MinimumSize = new Size(1000, 700);
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Головна форма - Управління зоомагазином";
+            Text = "5";
             panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
             panelMain.ResumeLayout(false);
