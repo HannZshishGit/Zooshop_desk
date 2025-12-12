@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MySql.Data.MySqlClient;
-using static Org.BouncyCastle.Math.EC.ECCurve;
+using ZooShopDesktop.Models;
 
 namespace ZooShopDesktop.Forms
 {
@@ -31,45 +31,20 @@ namespace ZooShopDesktop.Forms
                 MessageBox.Show("Будь ласка, введіть коректні данні", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            var result = User.LoginUser(email, password);
 
-            try
+            switch (result.Status)
             {
-                string query = $"select user_id, email_, hashed_password, role_, full_name from Users WHERE email_ = '{email}'";
+                case LoginStatus.UserNotFound:
+                case LoginStatus.WrongPassword:
+                case LoginStatus.Error:
+                    MessageBox.Show(result.Error, "Помилка входу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
 
-                using (var reader = DbConfig.ReadData(query))
-                {
-                    if (reader != null && reader.HasRows && reader.Read())
-                    {
-                        int userId = reader.GetInt32("user_id");
-                        string storedEmail = reader["email_"].ToString();
-                        string storedPassword = reader["hashed_password"].ToString();
-                        role = reader["role_"].ToString();
-                        string fullName = reader["full_name"].ToString();
-
-                        bool isPasswordsAreSame = BCrypt.Net.BCrypt.Verify(password, storedPassword);
-
-                        if (isPasswordsAreSame)
-                        {
-                            MessageBox.Show($"Вітаємо, {fullName}!\nВаша роль: {role}", "Успішний вхід", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            OpenMainForm(role);
-                        }
-                        else
-                        {
-                            MessageBox.Show("Невірний пароль", "Помилка входу", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            passwordTextBox.Clear();
-                            passwordTextBox.Focus();
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Користувача з таким email не знайдено", "Помилка входу", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        emailTextBox.Focus();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Помилка під час входу: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                case LoginStatus.Ok:
+                    MessageBox.Show($"Вітаємо, {result.FullName}!\nВаша роль: {result.Role}", "Успішний вхід", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    OpenMainForm(result.Role);
+                    return;
             }
         }
 
@@ -77,7 +52,7 @@ namespace ZooShopDesktop.Forms
         {
             this.Hide();
 
-            MainForm mainForm = new MainForm(role);
+            MainForm mainForm = new MainForm(userRole);
             mainForm.Show();
         }
     }

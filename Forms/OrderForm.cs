@@ -70,42 +70,18 @@ namespace ZooShopDesktop.Forms
 
         private void SaveOrder()
         {
-            try
+            string recipient = txtRecipient.Text;
+
+            var (orderId, error) = Order.CreateOrder(customerId, recipient, ShoppingCart.Products.ToList());
+
+            if (error == null)
             {
-                string recipient = txtRecipient.Text;
-
-                string orderQuery = $"insert into Orders (user_id, order_date, status, store_address, recipient) values ({customerId}, '{DateTime.Now:yyyy-MM-dd}', 'нове', 'Магазин ZooShop', '{recipient}'); select last_insert_id() as order_id;";
-
-                int orderId = 0;
-
-                using (var reader = DbConfig.ReadData(orderQuery))
-                {
-                    if (reader != null && reader.Read())
-                    {
-                        orderId = reader.GetInt32("order_id");
-                    }
-                }
-
-                if (orderId == 0)
-                {
-                    MessageBox.Show("Не вдалося створити замовлення");
-                    return;
-                }
-
-                foreach (var product in ShoppingCart.Products)
-                {
-                    string orderItemsQuery = $"insert into OrderedProducts (order_id, product_id, quantity, price) values ({orderId}, {product.ProductId}, {1}, {product.Price.ToString(CultureInfo.InvariantCulture)})";
-
-                    DbConfig.ExecuteQuery(orderItemsQuery);
-                }
-
-                ShoppingCart.ClearCart();
-
                 MessageBox.Show($"Замовлення #{orderId} успішно оформлено!\nКлієнт: {txtFullName.Text}", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadOrderItems();
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Помилка при оформленні замовлення: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Помилка при оформленні замовлення: {error}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -142,70 +118,39 @@ namespace ZooShopDesktop.Forms
 
         private void SearchCustomerByEmail(string email)
         {
-            try
+            User customer = User.FindByEmail(email);
+
+            if (customer != null)
             {
-                string query = $"select user_id, full_name, phone, email_, role_ from users where email_ = '{email}'";
+                customerId = customer.UserId;
+                txtFullName.Text = customer.FullName;
+                panelCustomerInfo.Visible = true;
+                lblCustomerPhone.Text = string.IsNullOrEmpty(customer.Phone) ? "не вказано" : customer.Phone;
+                lblCustomerRole.Text = string.IsNullOrEmpty(customer.Role) ? "не вказано" : customer.Role;
 
-                using (var reader = DbConfig.ReadData(query))
+                if (customer.Role != null && customer.Role != "Клієнт")
                 {
-                    if (reader != null && reader.Read())
-                    {
-                        customerId = reader.GetInt32("user_id");
-                        txtFullName.Text = reader.GetString("full_name");
-
-                        panelCustomerInfo.Visible = true;
-
-                        if (!reader.IsDBNull(reader.GetOrdinal("phone")))
-                        {
-                            lblCustomerPhone.Text = reader.GetString("phone");
-                        }
-                        else
-                        {
-                            lblCustomerPhone.Text = "не вказано";
-                        }
-
-                        if (!reader.IsDBNull(reader.GetOrdinal("role_")))
-                        {
-                            string role = reader.GetString("role_");
-                            lblCustomerRole.Text = role;
-
-                            if (role != "Клієнт")
-                            {
-                                lblCustomerFound.ForeColor = Color.Orange;
-                                lblCustomerFound.Text = "Користувач знайдений (не клієнт)";
-                                btnConfirmOrder.Enabled = false;
-                            }
-                            else
-                            {
-                                lblCustomerFound.ForeColor = Color.Green;
-                                lblCustomerFound.Text = "Клієнт знайдений";
-                                btnConfirmOrder.Enabled = true;
-                            }
-                        }
-                        else
-                        {
-                            lblCustomerRole.Text = "не вказано";
-                            lblCustomerFound.ForeColor = Color.Green;
-                            lblCustomerFound.Text = "Клієнт знайдений";
-                            btnConfirmOrder.Enabled = true;
-                        }
-                    }
-                    else
-                    {
-                        customerId = 0;
-                        txtFullName.Clear();
-                        panelCustomerInfo.Visible = true;
-                        lblCustomerPhone.Text = "-";
-                        lblCustomerRole.Text = "-";
-                        lblCustomerFound.ForeColor = Color.Red;
-                        lblCustomerFound.Text = "Користувач не знайдений";
-                        btnConfirmOrder.Enabled = false;
-                    }
+                    lblCustomerFound.ForeColor = Color.Orange;
+                    lblCustomerFound.Text = "Користувач знайдений (не клієнт)";
+                    btnConfirmOrder.Enabled = false;
+                }
+                else
+                {
+                    lblCustomerFound.ForeColor = Color.Green;
+                    lblCustomerFound.Text = "Клієнт знайдений";
+                    btnConfirmOrder.Enabled = true;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Помилка при пошуку клієнта: {ex.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                customerId = 0;
+                txtFullName.Clear();
+                panelCustomerInfo.Visible = true;
+                lblCustomerPhone.Text = "-";
+                lblCustomerRole.Text = "-";
+                lblCustomerFound.ForeColor = Color.Red;
+                lblCustomerFound.Text = "Користувач не знайдений";
+                btnConfirmOrder.Enabled = false;
             }
         }
 

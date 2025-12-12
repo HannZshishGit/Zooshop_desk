@@ -31,39 +31,10 @@ namespace ZooShopDesktop.Forms
 
         private void LoadProductsData()
         {
-            LoadCategoryProducts(1, catsProducts);
-            LoadCategoryProducts(2, dogsProducts);
-            LoadCategoryProducts(3, birdsProducts);
-            LoadCategoryProducts(4, fishProducts);
-        }
-
-        private void LoadCategoryProducts(int categoryId, Dictionary<string, Product> productsList)
-        {
-            string query = $"select * from Products where category_id = {categoryId}";
-
-            using (var reader = DbConfig.ReadData(query))
-            {
-                if (reader == null) return;
-
-                while (reader.Read())
-                {
-                    var product = new Product
-                    {
-                        ProductId = reader.GetInt32("product_id"),
-                        Name = reader["name"].ToString(),
-                        CategoryId = reader.GetInt32("category_id"),
-                        ManufacturerId = reader.GetInt32("manufacturer_id"),
-                        Price = reader.GetDecimal("price"),
-                        StockQuantity = reader.GetInt32("stock_quantity"),
-                        Weight = reader["weight"].ToString(),
-                        AnimalAge = reader["animal_age"].ToString(),
-                        ShelfLifeMonths = reader.GetInt32("shelf_life_months"),
-                        Description = reader["description"].ToString()
-                    };
-
-                    productsList[product.ProductId.ToString()] = product;
-                }
-            }
+            catsProducts = Product.GetProductsByCategory(1);
+            dogsProducts = Product.GetProductsByCategory(2);
+            birdsProducts = Product.GetProductsByCategory(3);
+            fishProducts = Product.GetProductsByCategory(4);
         }
 
         private void RenderProducts()
@@ -97,7 +68,6 @@ namespace ZooShopDesktop.Forms
             var selectedWeights = new List<string>();
             if (chkWeightSmall.Checked) selectedWeights.AddRange(new[] { "0.2 kg", "0.25 kg", "0.3 kg", "0.35 kg", "0.38 kg", "0.4 kg", "0.45 kg", "0.5 kg" });
             if (chkWeightMedium.Checked) selectedWeights.AddRange(new[] { "1.5 kg", "1.8 kg", "2 kg", "2.5 kg", "2.8 kg", "3 kg" });
-
 
             // Фільтр сроку придатності
             var selectedShelfLives = new List<int>();
@@ -205,7 +175,6 @@ namespace ZooShopDesktop.Forms
 
             RenderProducts();
         }
-
 
         private void chkAgeAllAges_CheckedChanged(object sender, EventArgs e)
         {
@@ -368,7 +337,6 @@ namespace ZooShopDesktop.Forms
                 chkShelfLifeAll.Checked = false;
             }
         }
-
 
         private void txtMinPrice_KeyPress(object sender, KeyPressEventArgs e)
         {

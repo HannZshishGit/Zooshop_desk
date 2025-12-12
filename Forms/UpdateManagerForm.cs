@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZooShopDesktop.Models;
 
 namespace ZooShopDesktop.Forms
 {
@@ -24,44 +25,44 @@ namespace ZooShopDesktop.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBoxFullName.Text))
+            string fullname = textBoxFullName.Text;
+            string phone = textBoxPhone.Text;
+            string email = textBoxEmail.Text;
+
+            if (string.IsNullOrWhiteSpace(fullname))
             {
                 MessageBox.Show("Введіть ПІБ менеджера.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(textBoxPhone.Text))
+            if (string.IsNullOrWhiteSpace(phone))
             {
                 MessageBox.Show("Введіть номер телефону.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(textBoxEmail.Text))
+            if (string.IsNullOrWhiteSpace(email))
             {
                 MessageBox.Show("Введіть email.", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            try
+            string err = User.UpdateManager(fullname, phone, email, managerId);
+
+            if (err != null)
             {
-                string updateQuery = $"update users set full_name = '{textBoxFullName.Text}', phone = '{textBoxPhone.Text}', email_ = '{textBoxEmail.Text}' where user_id = '{managerId}';";
-
-                DbConfig.ExecuteQuery(updateQuery);
-
-                MessageBox.Show("Дані менеджера успішно оновлено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-
-                var managerForm = this.FindForm() as ManagersForm;
-                if (managerForm != null)
-                {
-                    managerForm.LoadManagers();
-                }
+                MessageBox.Show($"Помилка при оновленні даних: {err}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception exception)
+
+            MessageBox.Show("Дані менеджера успішно оновлено.", "Успіх", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+
+            var managerForm = this.FindForm() as ManagersForm;
+            if (managerForm != null)
             {
-                MessageBox.Show($"Помилка при оновленні даних: {exception.Message}", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                managerForm.LoadManagers();
             }
         }
 
@@ -73,19 +74,17 @@ namespace ZooShopDesktop.Forms
 
         private void LoadManagerData()
         {
-            string query = $"select * from users where user_id = '{managerId}'";
+            User manager = User.LoadById(managerId);
 
-            using (var reader = DbConfig.ReadData(query))
+            if (manager != null)
             {
-                if (reader != null)
-                {
-                    while (reader.Read())
-                    {
-                        textBoxFullName.Text = reader["full_name"].ToString();
-                        textBoxEmail.Text = reader["email_"].ToString();
-                        textBoxPhone.Text = reader["phone"].ToString();
-                    }
-                }
+                textBoxFullName.Text = manager.FullName;
+                textBoxEmail.Text = manager.Email;
+                textBoxPhone.Text = manager.Phone;
+            }
+            else
+            {
+                MessageBox.Show("Не вдалося завантажити дані менеджера", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

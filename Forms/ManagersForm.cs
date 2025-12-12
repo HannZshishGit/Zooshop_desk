@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Crypto.Generators;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZooShopDesktop.Models;
 
 namespace ZooShopDesktop.Forms
 {
@@ -19,27 +19,19 @@ namespace ZooShopDesktop.Forms
             InitializeComponent();
             LoadManagers();
         }
-
         public void LoadManagers()
         {
-            string query = "select user_id, full_name, phone, email_, role_ from Users where role_ = 'Менеджер';";
+            var managers = User.GetManagers();
+            dataGridViewManagers.Rows.Clear();
 
-            using (var reader = DbConfig.ReadData(query))
+            foreach (var manager in managers)
             {
-                dataGridViewManagers.Rows.Clear();
-
-                if (reader != null)
-                {
-                    while (reader.Read())
-                    {
-                        dataGridViewManagers.Rows.Add(
-                            reader["full_name"],
-                            reader["email_"],
-                            reader["phone"],
-                            reader["user_id"]
-                        );
-                    }
-                }
+                dataGridViewManagers.Rows.Add(
+                    manager.FullName,
+                    manager.Email,
+                    manager.Phone ?? "-",
+                    manager.UserId
+                );
             }
         }
 
@@ -58,11 +50,9 @@ namespace ZooShopDesktop.Forms
                 return;
             }
 
-            string query = $"insert into Users (full_name, phone, email_, hashed_password, role_) values ('{fullName}', '{phone}', '{email}', '{hashedPassword}', 'Менеджер');";
-
             try
             {
-                DbConfig.ExecuteQuery(query);
+                User.AddManager(fullName, phone, email, password);
 
                 MessageBox.Show("Нового менеджера булу успішно додано");
             }
@@ -87,9 +77,12 @@ namespace ZooShopDesktop.Forms
 
             if (result != DialogResult.Yes) return;
 
-            string query = $"delete from Users where user_id = {userId}";
+            string error = User.DeleteManager(userId);
 
-            DbConfig.ExecuteQuery(query);
+            if (error != null)
+            {
+                MessageBox.Show($"Error: {error}");
+            }
 
             LoadManagers();
 

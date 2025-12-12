@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZooShopDesktop.Models;
 
 namespace ZooShopDesktop.Forms
 {
@@ -44,13 +45,19 @@ namespace ZooShopDesktop.Forms
                 return;
             }
 
-            string query = $"insert into users (full_name, phone, email_, role_) values ('{FullName}', '{Phone}', '{Email}', 'Клієнт')";
-
             try
             {
-                DbConfig.ExecuteQuery(query);
+                string error = User.AddClient(FullName, Phone, Email);
 
-                MessageBox.Show("Нового клієнта було успішно додано!");
+                if (error == null)
+                {
+                    MessageBox.Show("Нового клієнта було успішно додано!");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Помилка при додаванні клієнта: " + error, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 this.Close();
             }

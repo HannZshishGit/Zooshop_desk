@@ -1,40 +1,4 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Drawing;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows.Forms;
-
-//namespace ZooShopDesktop.Forms
-//{
-//    public partial class MainForm : Form
-//    {
-//        private string userRole;
-//        public MainForm(string userRole)
-//        {
-//            userRole = userRole;
-
-//            InitializeComponent();
-//        }
-
-//        private void btnCatalog_Click(object sender, EventArgs e)
-//        {
-//            CatalogForm catalogForm = new CatalogForm();
-//            catalogForm.Show();
-//        }
-
-//        private void btnManagers_Click(object sender, EventArgs e)
-//        {
-//            ManagersForm managersForm = new ManagersForm();
-//            managersForm.Show();
-//        }
-//    }
-//}
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -64,21 +28,24 @@ namespace ZooShopDesktop.Forms
                     Anchor = AnchorStyles.None,
                     BackColor = Color.FromArgb(255, 152, 0),
                     FlatAppearance = {
-                    BorderSize = 0,
-                    MouseDownBackColor = Color.FromArgb(230, 126, 34),
-                    MouseOverBackColor = Color.FromArgb(243, 156, 18)
+                        BorderSize = 0,
+                        MouseDownBackColor = Color.FromArgb(230, 126, 34),
+                        MouseOverBackColor = Color.FromArgb(243, 156, 18)
                     },
                     FlatStyle = FlatStyle.Flat,
                     Font = new Font("Segoe UI Semibold", 16F, FontStyle.Bold, GraphicsUnit.Point, 204),
                     ForeColor = Color.White,
+                    ImageAlign = ContentAlignment.TopCenter,
                     Location = new Point(40, 30),
                     Name = "btnOrders",
-                    Size = new Size(320, 150),
+                    Padding = new Padding(0, 20, 0, 10),
+                    Size = new Size(320, 140),
                     TabIndex = 1,
                     Text = "УПРАВЛІННЯ ЗАМОВЛЕННЯМИ",
-                    TextAlign = ContentAlignment.MiddleCenter
+                    TextAlign = ContentAlignment.BottomCenter,
+                    TextImageRelation = TextImageRelation.ImageAboveText,
+                    UseVisualStyleBackColor = false
                 };
-
 
                 tableLayoutPanel.Controls.Remove(btnManagers);
 

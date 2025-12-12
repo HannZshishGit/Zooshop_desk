@@ -13,7 +13,7 @@ namespace ZooShopDesktop.Forms
 {
     public partial class ProductPageForm : Form
     {
-        private readonly Product _product;
+        private Product _product;
 
         public ProductPageForm(Product product)
         {
@@ -26,53 +26,36 @@ namespace ZooShopDesktop.Forms
         {
             try
             {
-                string query = @"
-                    select 
-                        p.product_id,
-                        p.name as product_name,
-                        p.price,
-                        p.stock_quantity,
-                        p.weight,
-                        p.animal_age,
-                        p.shelf_life_months,
-                        p.description,
-                        c.category_name,
-                        m.manufacturer_name
-                    from Products p
-                    left JOIN Categories c on p.category_id = c.category_id
-                    left JOIN Manufacturers m on p.manufacturer_id = m.manufacturer_id
-                    where p.product_id = " + _product.ProductId;
+                _product = Product.LoadById(_product.ProductId);
 
-                using (var reader = DbConfig.ReadData(query))
+                if (_product != null)
                 {
-                    if (reader != null && reader.HasRows && reader.Read())
+                    lblProductName.Text = _product.Name;
+                    lblPrice.Text = $"{_product.Price} грн";
+                    lblCategory.Text = $"Категорія: {_product.CategoryName}";
+                    lblManufacturer.Text = $"Виробник: {_product.ManufacturerName}";
+                    lblStock.Text = $"На складі: {_product.StockQuantity} шт.";
+                    lblWeight.Text = $"Вага: {_product.Weight}";
+                    lblAnimalAge.Text = $"Вік: {_product.AnimalAge}";
+                    lblShelfLife.Text = $"Термін придатності: {_product.ShelfLifeMonths} міс.";
+                    txtDescription.Text = _product.Description;
+
+                    if (_product.StockQuantity <= 0)
                     {
-                        _product.Name = reader["product_name"].ToString();
-                        _product.Price = reader.GetDecimal("price");
-                        _product.StockQuantity = reader.GetInt32("stock_quantity");
-                        _product.Weight = reader["weight"].ToString();
-                        _product.AnimalAge = reader["animal_age"].ToString();
-                        _product.ShelfLifeMonths = reader.GetInt32("shelf_life_months");
-                        _product.Description = reader["description"].ToString();
-
-
-                        lblProductName.Text = _product.Name;
-                        lblPrice.Text = $"{_product.Price} грн";
-                        lblCategory.Text = $"Категорія: {reader["category_name"].ToString()}";
-                        lblManufacturer.Text = $"Виробник: {reader["manufacturer_name"].ToString()}";
-                        lblStock.Text = $"На складі: {_product.StockQuantity} шт.";
-                        lblWeight.Text = $"Вага: {_product.Weight}";
-                        lblAnimalAge.Text = $"Вік: {_product.AnimalAge}";
-                        lblShelfLife.Text = $"Термін придатності: {_product.ShelfLifeMonths} міс.";
-                        txtDescription.Text = _product.Description;
-
-                        if (_product.StockQuantity <= 0)
-                        {
-                            btnAddToCart.Enabled = false;
-                            btnAddToCart.Text = "Немає в наявності";
-                            btnAddToCart.BackColor = Color.Gray;
-                        }
+                        btnAddToCart.Enabled = false;
+                        btnAddToCart.Text = "Немає в наявності";
+                        btnAddToCart.BackColor = Color.Gray;
                     }
+                    else
+                    {
+                        btnAddToCart.Enabled = true;
+                        btnAddToCart.Text = "Додати в корзину";
+                        btnAddToCart.BackColor = Color.FromArgb(255, 152, 0);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Товар не знайдено", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)

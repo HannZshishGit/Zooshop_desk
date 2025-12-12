@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ZooShopDesktop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48172c635178073b5d95044c3ed980081d900296")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+35faaf1504415ce735a2868efc8d90df142b6821")]
 [assembly: System.Reflection.AssemblyProductAttribute("ZooShopDesktop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ZooShopDesktop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
